@@ -12,7 +12,7 @@ export class CustomerService {
     private customerRepository: Repository<Customer>,
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto) {
+  async createCustomer(createCustomerDto: CreateCustomerDto) {
     try {
       const customer = this.customerRepository.create(createCustomerDto);
       return await this.customerRepository.save(customer);
@@ -40,8 +40,13 @@ export class CustomerService {
     return this.customerRepository.findOne({where: {email}});
   };
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
+  async updateCustomer(id: number, updateCustomerDto: UpdateCustomerDto) {
+    const customer = await this.customerRepository.findOne({where: {id}});
+    if (!customer) {
+      throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
+    }
+    const updatedCustomer = Object.assign(customer, updateCustomerDto);
+    return await this.customerRepository.save(updatedCustomer);
   }
 
   remove(id: number) {

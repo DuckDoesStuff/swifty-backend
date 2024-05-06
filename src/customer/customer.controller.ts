@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Headers, Res, Req } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -25,7 +25,6 @@ export class CustomerController {
   @Post("signin")
   async signIn(@Body() body : any) {
     try {
-      console.log(body);
       const result = await this.customerService.findOneByEmail(body.email);
       if (!result) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -40,7 +39,7 @@ export class CustomerController {
   @Post("signup")
   async signUp(@Body() body : CreateCustomerDto) {
     try {
-      const customer = await this.customerService.create(body);
+      const customer = await this.customerService.createCustomer(body);
       return { statusCode: HttpStatus.OK, data: customer };
     } catch (error) {
       console.error(error);
@@ -50,22 +49,25 @@ export class CustomerController {
 
   @Post()
   create(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customerService.create(createCustomerDto);
+    return this.customerService.createCustomer(createCustomerDto);
   }
+
+  // @Get()
+  // findAll() {
+  //   return this.customerService.findAll();
+  // }
 
   @Get()
-  findAll() {
-    return this.customerService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customerService.findOne(+id);
+  getUserData(@Headers() headers: any) {
+    // Get the token from the headers
+    const token = headers.authorization;
+    console.log(token);
+    return 200;
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customerService.update(+id, updateCustomerDto);
+    return this.customerService.updateCustomer(+id, updateCustomerDto);
   }
 
   @Delete(':id')

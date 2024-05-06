@@ -1,26 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { UpdateShopDto } from './dto/update-shop.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Shop } from './entities/shop.entity';
+import { Repository } from 'typeorm';
+import { Merchant } from 'src/merchant/entities/merchant.entity';
 
 @Injectable()
 export class ShopService {
-  create(createShopDto: CreateShopDto) {
-    return 'This action adds a new shop';
+  constructor(
+    @InjectRepository(Shop)
+    private shopRepository: Repository<Shop>,
+    @InjectRepository(Merchant)
+    private merchantRepository: Repository<Merchant>,
+  ) {}
+
+  async createShop(createShopDto: CreateShopDto, merchantId: number) {
+    try {
+      const merchant = await this.merchantRepository.findOne({where: {id: merchantId}});
+      const shop = this.shopRepository.create({
+        ...createShopDto,
+        merchant,
+      });
+      return await this.shopRepository.save(shop);
+    } catch (error) {
+      throw new Error('Failed to create shop');
+    }
+  }
+
+  findAllShopFromMerchant(merchantId: number) {
+    return this.shopRepository.find({where: {merchant: {id: merchantId}}});
   }
 
   findAll() {
-    return `This action returns all shop`;
+    return this.shopRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} shop`;
+    return this.shopRepository.findOne({where: {id}});
   }
 
-  update(id: number, updateShopDto: UpdateShopDto) {
-    return `This action updates a #${id} shop`;
+  updateShop(id: number, updateShopDto: UpdateShopDto) {
+    return this.shopRepository.update(id, updateShopDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} shop`;
+  removeShop(id: number) {
+    return this.shopRepository.delete(id);
   }
 }

@@ -7,12 +7,13 @@ import { MerchantModule } from './merchant/merchant.module';
 import { CartModule } from './cart/cart.module';
 import { ProductModule } from './product/product.module';
 import { ShopModule } from './shop/shop.module';
+import { SessionModule } from './session/session.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      url: "postgres://admin:admin@db:5432/swifty",
+      url: process.env.DATABASE_URL,
       entities: ["dist/**/*.entity{.ts,.js}"],
       synchronize: true,
     }),
@@ -21,6 +22,7 @@ import { ShopModule } from './shop/shop.module';
     CartModule,
     ProductModule,
     ShopModule,
+    SessionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

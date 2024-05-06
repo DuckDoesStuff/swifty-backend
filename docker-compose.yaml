@@ -8,6 +8,8 @@ services:
     networks:
       - bridged-network
     command: npm run start:dev
+    environment:
+      - DATABASE_URL=postgres://admin:admin@db:5432/swifty
     develop:
       watch:
         - path: ./
