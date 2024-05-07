@@ -24,9 +24,9 @@ export class ShopController {
   }
 
   @Get()
-  async findAll(@Req() req: Request) {
+  findAll(@Req() req: Request) {
     try {
-      return await this.shopService.findAllShopFromMerchant(req.merchantId);
+      return this.shopService.findAllShopFromMerchant(req.merchantId);
     } catch (error) {
       console.error(error);
       throw new HttpException('Failed to fetch shops', HttpStatus.INTERNAL_SERVER_ERROR);

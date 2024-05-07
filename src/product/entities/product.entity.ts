@@ -1,6 +1,6 @@
 import { ProductImage } from "src/productimage/entities/productimage.entity";
 import { Shop } from "src/shop/entities/shop.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -10,7 +10,7 @@ export class Product {
 	id: string;
 
 	@Column()
-	name: string;
+	displayName: string;
 
 	@Column()
 	description: string;
@@ -27,6 +27,6 @@ export class Product {
 	@CreateDateColumn()
 	createdAt: Date;
 
-	@OneToMany(type => Shop, shop => shop.nameId)
+	@ManyToOne(() => Shop, shop => shop.nameId)
 	shop: Shop;
 }

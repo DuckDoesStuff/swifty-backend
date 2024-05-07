@@ -41,7 +41,7 @@ export class ShopService {
   }
 
   findOne(nameId: string) {
-    return this.shopRepository.findOne({where: {nameId}});
+    return this.shopRepository.findOne({where: {nameId}, relations: ['merchant', 'products']});
   }
 
   updateShop(nameId: string, updateShopDto: UpdateShopDto) {

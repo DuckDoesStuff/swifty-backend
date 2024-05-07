@@ -27,7 +27,6 @@ export class SessionService {
       }
       const expiresIn = 60 * 60 * 24 * 7 * 1000;
       const sessionCookie = await admin.auth().createSessionCookie(tokenId, { expiresIn });
-      console.log("sessionCookie", sessionCookie)
       const customer = await this.customerService.findOneByEmail(customerEmail);
       if (!customer) {
         throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
@@ -35,7 +34,6 @@ export class SessionService {
 
 
       const session = this.sessionRepository.create({ sessionCookie, customer, createdAt: new Date() });
-      console.log("session", session)
       await this.sessionRepository.save(session);
       return sessionCookie;
     } catch (error) {

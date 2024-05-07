@@ -24,5 +24,6 @@ export class Merchant {
 	avatar: string;
 
 	@OneToMany(type => Shop, shop => shop.merchant)
+	@JoinColumn()
 	shops: Shop[];
 }

@@ -29,8 +29,8 @@ export class MerchantService {
     return `This action returns all merchant`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} merchant`;
+  findOne(id: string) {
+    return this.merchantRepository.findOne({where: {nameId: id}, relations: ['shops']});
   }
 
   findOneByEmail(email: string) {

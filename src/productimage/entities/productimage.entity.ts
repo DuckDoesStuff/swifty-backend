@@ -1,6 +1,5 @@
 import { Product } from "src/product/entities/product.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -13,9 +12,10 @@ export class ProductImage {
 	@Column()
 	url: string;
 
-	@OneToMany(() => Product, product => product.id)
+	@ManyToOne(() => Product, product => product.id)
+	@JoinColumn()
 	product: Product;
 
-	@Column()
+	@CreateDateColumn()
 	createdAt: Date;
 }

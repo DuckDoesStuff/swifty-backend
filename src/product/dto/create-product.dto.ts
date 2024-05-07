@@ -4,7 +4,7 @@ import { IsNumber, IsString } from "class-validator";
 
 export class CreateProductDto {
 	@IsString()
-	name: string;
+	displayName: string;
 
 	@IsString()
 	description: string;
@@ -14,4 +14,7 @@ export class CreateProductDto {
 
 	@IsNumber()
 	stock: number;
+
+	@IsString()
+	shopNameId: string;
 }

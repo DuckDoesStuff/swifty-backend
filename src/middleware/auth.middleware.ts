@@ -18,6 +18,7 @@ export class AuthMiddleware implements NestMiddleware {
 			}
 
 			req.merchant = result;
+			req.merchantId = result.id;
 			next();
 		})
 		.catch((error) => {
