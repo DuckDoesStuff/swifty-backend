@@ -1,5 +1,5 @@
 import { Shop } from "src/shop/entities/shop.entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -8,11 +8,14 @@ export class Merchant {
 	@PrimaryGeneratedColumn()
 	id: number;
 
+	@PrimaryColumn({unique: true})
+	nameId: string;
+
 	@Column()
 	email: string;
 
 	@Column({nullable: true})
-	name: string;
+	displayName: string;
 
 	@Column({nullable: true})
 	phone: string;

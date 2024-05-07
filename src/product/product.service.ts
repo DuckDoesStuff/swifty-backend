@@ -17,19 +17,19 @@ export class ProductService {
   }
 
 
-  findAll() {
-    return this.productRepository.find();
-  }
+  // findAll() {
+  //   return this.productRepository.find();
+  // }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} product`;
+  // }
 
-  updateProduct(id: number, updateProductDto: UpdateProductDto) {
-    return this.productRepository.update(id, updateProductDto);
-  }
+  // updateProduct(id: number, updateProductDto: UpdateProductDto) {
+  //   return this.productRepository.update(id, updateProductDto);
+  // }
 
-  removeProduct(id: number) {
-    return this.productRepository.delete(id);
-  }
+  // removeProduct(id: number) {
+  //   return this.productRepository.delete(id);
+  // }
 }

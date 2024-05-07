@@ -8,16 +8,16 @@ export class AuthMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
 		const sessionCookie = req.cookies.swifty_merchant_session;
 		if (!sessionCookie) {
-			return res.status(401).send('Unauthorized from Middleware');
+			return res.status(401).send('Unauthorized from Middleware, forgot to include credentials?');
 		}
 
-		this.sessionService.getMerchantId(sessionCookie)
+		this.sessionService.getMerchantData(sessionCookie)
 		.then((result) => {
 			if (!result) {
 				return res.status(401).send('Unauthorized from Middleware');
 			}
 
-			req.merchantId = result;
+			req.merchant = result;
 			next();
 		})
 		.catch((error) => {

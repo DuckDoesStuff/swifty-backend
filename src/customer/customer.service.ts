@@ -14,6 +14,8 @@ export class CustomerService {
 
   async createCustomer(createCustomerDto: CreateCustomerDto) {
     try {
+      console.log("Creating new customer");
+      console.log(createCustomerDto);
       const customer = this.customerRepository.create(createCustomerDto);
       return await this.customerRepository.save(customer);
     } catch (error) {

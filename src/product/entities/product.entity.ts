@@ -1,12 +1,13 @@
+import { ProductImage } from "src/productimage/entities/productimage.entity";
 import { Shop } from "src/shop/entities/shop.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
 @Entity()
 export class Product {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryGeneratedColumn('uuid')
+	id: string;
 
 	@Column()
 	name: string;
@@ -20,15 +21,12 @@ export class Product {
 	@Column({nullable: true, default: 0})
 	stock: number;
 
-	@Column()
-	thumbnail: string;
+	@OneToMany(() => ProductImage, productImage => productImage.id)
+	productImage: ProductImage[];
 
-	// @Column()
-	// category: string;
-
-	@Column()
+	@CreateDateColumn()
 	createdAt: Date;
 
-	@OneToMany(type => Shop, shop => shop.id)
+	@OneToMany(type => Shop, shop => shop.nameId)
 	shop: Shop;
 }

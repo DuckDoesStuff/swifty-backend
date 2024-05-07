@@ -13,11 +13,12 @@ Step 2: Build the docker containers and run
 
 `docker compose up -d`
 
-(Optional) Sync the files update
+(Optional) Sync the files update:
 
 `docker compose watch`
 
-(Optional) Monitor the containers logs
+(Optional) Monitor the containers logs:
+
 `docker compose logs -f swifty-backend db`
 
 

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { SessionService } from './session.service';
 import { SessionController } from './session.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,6 +7,7 @@ import { CustomerService } from 'src/customer/customer.service';
 import { MerchantService } from 'src/merchant/merchant.service';
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Merchant } from 'src/merchant/entities/merchant.entity';
+import { AuthMiddleware } from 'src/middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -17,4 +18,13 @@ import { Merchant } from 'src/merchant/entities/merchant.entity';
   controllers: [SessionController],
   providers: [SessionService, CustomerService, MerchantService],
 })
-export class SessionModule {}
+export class SessionModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+    .apply(AuthMiddleware)
+    .forRoutes(
+      { path: 'session/customer', method: RequestMethod.DELETE },
+      { path: 'session/merchant', method: RequestMethod.DELETE },
+    );
+  }
+}

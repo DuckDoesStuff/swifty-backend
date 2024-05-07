@@ -8,6 +8,8 @@ import { Request, Response } from 'express';
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
+
+  // Create customer session
   @Post("customer")
   async createCustomerSession(@Body() body: any, @Res() res: Response) {
     const idToken = body.idToken;
@@ -22,6 +24,7 @@ export class SessionController {
     res.send({ statusCode: HttpStatus.OK, sessionId: cookieSession });
   }
 
+  // Create merchant session
   @Post("merchant")
   async createMerchantSession(@Body() body: any, @Res() res: Response) {
     const idToken = body.idToken;
@@ -36,6 +39,7 @@ export class SessionController {
     res.send({ statusCode: HttpStatus.OK, sessionId: cookieSession});
   }
 
+  // Get customer data
   @Get("customer")
   async getCustomerData(@Req() req: Request, @Res() res: Response) {
     const sessionCookie = req.cookies["swifty_customer_session"];
@@ -46,6 +50,7 @@ export class SessionController {
     res.send({ statusCode: HttpStatus.OK, data: customer });
   }
 
+  // Get merchant data
   @Get("merchant")
   async getMerchantData(@Req() req: Request, @Res() res: Response) {
     const sessionCookie = req.cookies["swifty_merchant_session"];
@@ -54,5 +59,17 @@ export class SessionController {
     }
     const merchant = await this.sessionService.getMerchantData(sessionCookie);
     res.send({ statusCode: HttpStatus.OK, data: merchant });
+  }
+
+  @Delete("customer")
+  async deleteCustomerSession(@Res() res: Response) {
+    res.clearCookie("swifty_customer_session");
+    res.send({ statusCode: HttpStatus.OK, message: "Session deleted" });
+  }
+
+  @Delete("merchant")
+  async deleteMerchantSession(@Res() res: Response) {
+    res.clearCookie("swifty_merchant_session");
+    res.send({ statusCode: HttpStatus.OK, message: "Session deleted" });
   }
 }

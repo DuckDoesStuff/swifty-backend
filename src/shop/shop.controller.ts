@@ -15,8 +15,7 @@ export class ShopController {
   @Post()
   async create(@Body() createShopDto: CreateShopDto, @Req() req: Request) {
     try {
-      // If the session is valid, create the shop
-      await this.shopService.createShop(createShopDto, req.merchantId);
+      await this.shopService.createShop(createShopDto, req.merchant);
       return { statusCode: HttpStatus.OK, message: 'Shop created' };
     } catch (error) {
       console.error(error);
@@ -34,18 +33,18 @@ export class ShopController {
     }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.shopService.findOne(+id);
+  @Get(':nameId')
+  findOne(@Param('nameId') nameId: string) {
+    return this.shopService.findOne(nameId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShopDto: UpdateShopDto) {
-    return this.shopService.updateShop(+id, updateShopDto);
+  @Patch(':nameId')
+  update(@Param('nameId') nameId: string, @Body() updateShopDto: UpdateShopDto) {
+    return this.shopService.updateShop(nameId, updateShopDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.shopService.removeShop(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.shopService.removeShop(+id);
+  // }
 }

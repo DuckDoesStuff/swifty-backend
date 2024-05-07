@@ -3,7 +3,10 @@ import { IsDate, IsString } from "class-validator";
 
 export class CreateShopDto {
 	@IsString()
-	name: string;
+	nameId: string;
+
+	@IsString()
+	displayName: string;
 
 	@IsString()
 	description: string;
@@ -13,7 +16,4 @@ export class CreateShopDto {
 
 	@IsString()
 	phone: string;
-
-	@IsString()
-	logo: string;
 }

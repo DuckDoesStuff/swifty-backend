@@ -15,9 +15,13 @@ export class ShopService {
     private merchantRepository: Repository<Merchant>,
   ) {}
 
-  async createShop(createShopDto: CreateShopDto, merchantId: number) {
+  async createShop(createShopDto: CreateShopDto, merchant: Merchant) {
     try {
-      const merchant = await this.merchantRepository.findOne({where: {id: merchantId}});
+      // Check if a shop has already exist and throw error
+      const shopExist = await this.shopRepository.findOne({where: {nameId: createShopDto.nameId}});
+      if (shopExist) {
+        throw new Error('Shop already exist');
+      }
       const shop = this.shopRepository.create({
         ...createShopDto,
         merchant,
@@ -36,15 +40,15 @@ export class ShopService {
     return this.shopRepository.find();
   }
 
-  findOne(id: number) {
-    return this.shopRepository.findOne({where: {id}});
+  findOne(nameId: string) {
+    return this.shopRepository.findOne({where: {nameId}});
   }
 
-  updateShop(id: number, updateShopDto: UpdateShopDto) {
-    return this.shopRepository.update(id, updateShopDto);
+  updateShop(nameId: string, updateShopDto: UpdateShopDto) {
+    return this.shopRepository.update(nameId, updateShopDto);
   }
 
-  removeShop(id: number) {
-    return this.shopRepository.delete(id);
+  removeShop(nameId: string) {
+    return this.shopRepository.delete(nameId);
   }
 }

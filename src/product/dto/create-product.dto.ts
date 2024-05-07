@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 
 
 
@@ -14,13 +14,4 @@ export class CreateProductDto {
 
 	@IsNumber()
 	stock: number;
-
-	@IsString()
-	image: string;
-
-	// @IsString()
-	// category: string;
-
-	@IsDate()
-	createdAt: Date;
 }

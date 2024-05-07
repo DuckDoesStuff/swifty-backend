@@ -8,6 +8,7 @@ import { CartModule } from './cart/cart.module';
 import { ProductModule } from './product/product.module';
 import { ShopModule } from './shop/shop.module';
 import { SessionModule } from './session/session.module';
+import { ProductimageModule } from './productimage/productimage.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SessionModule } from './session/session.module';
     ProductModule,
     ShopModule,
     SessionModule,
+    ProductimageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
