@@ -7,13 +7,14 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, Pri
 export class ProductImage {
 
 	@PrimaryGeneratedColumn()
-	id: string;
+	id: number;
 
 	@Column()
 	url: string;
 
-	@ManyToOne(() => Product, product => product.id)
-	@JoinColumn()
+	@ManyToOne(() => Product, product => product.id, {
+		onDelete: 'CASCADE',
+	})
 	product: Product;
 
 	@CreateDateColumn()

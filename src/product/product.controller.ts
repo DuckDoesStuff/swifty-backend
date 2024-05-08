@@ -29,9 +29,12 @@ export class ProductController {
   }
 
   @Get()
-  getAll(@Query('limit') limit: string, @Query('offset') offset: string) {
+  getAll(@Query('shop') shopNameId: string, @Query('limit') limit: string, @Query('offset') offset: string, @Query('loadImg') loadImg: string) {
     const limitInt = limit ? parseInt(limit, 10) : 10;
     const offsetInt = offset ? parseInt(offset, 10) : 0;
+    const loadImgBool = loadImg === 'true';
+    
+    return this.productService.findAll(limitInt, offsetInt, loadImgBool, shopNameId);
   }
 
   @Get(':id')
@@ -55,8 +58,8 @@ export class ProductController {
   //   return this.productService.updateProduct(id, updateProductDto, req.merchant);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.productService.removeProduct(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.productService.removeProduct(id);
+  }
 }

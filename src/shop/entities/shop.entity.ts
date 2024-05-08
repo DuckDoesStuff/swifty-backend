@@ -30,6 +30,5 @@ export class Shop {
 	merchant: Merchant;
 
 	@OneToMany(() => Product, product => product.shop)
-	@JoinColumn()
 	products: Product[];
 }

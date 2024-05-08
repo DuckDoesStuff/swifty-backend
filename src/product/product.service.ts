@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +8,8 @@ import { ShopService } from 'src/shop/shop.service';
 import { Merchant } from 'src/merchant/entities/merchant.entity';
 import { Shop } from 'src/shop/entities/shop.entity';
 import { ProductImage } from 'src/productimage/entities/productimage.entity';
+import { getStorage } from 'firebase-admin/storage';
+import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
 
 @Injectable()
 export class ProductService {
@@ -41,9 +43,26 @@ export class ProductService {
   }
 
 
-  // findAll() {
-  //   return this.productRepository.find();
-  // }
+  async findAll(limit: number, offset: number, loadImg: boolean, shopNameId: string) {
+    const [products, total] = loadImg
+      ? await this.productRepository.findAndCount({
+          where: { shop: { nameId: shopNameId } },
+          relations: ['productImages'],
+          take: limit,
+          skip: offset,
+          order: { createdAt: 'ASC' },
+        })
+      : await this.productRepository.findAndCount({
+          where: { shop: { nameId: shopNameId } },
+          take: limit,
+          skip: offset,
+          order: { createdAt: 'ASC' },
+        });
+
+    const totalPages = Math.ceil(total / limit);
+
+    return { products, totalPages, total };
+  }
 
   // findOne(id: number) {
   //   return `This action returns a #${id} product`;
@@ -70,5 +89,13 @@ export class ProductService {
 
   findOneWithId(id: string) {
     return this.productRepository.findOne({where: {id}});
+  }
+
+  async removeProduct(id: string) {
+    const product = await this.productRepository.findOne({where: {id}});
+    if (!product) {
+      throw new HttpErrorByCode[HttpStatus.NOT_FOUND]('Product does not exist');
+    }
+    return this.productRepository.delete({id});
   }
 }

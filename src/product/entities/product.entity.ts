@@ -21,8 +21,11 @@ export class Product {
 	@Column({nullable: true, default: 0})
 	stock: number;
 
-	@OneToMany(() => ProductImage, productImage => productImage.id)
-	productImage: ProductImage[];
+	@OneToMany(() => ProductImage, productImage => productImage.product, {
+		onDelete: 'CASCADE',
+	})
+	@JoinColumn()
+	productImages: ProductImage[];
 
 	@CreateDateColumn()
 	createdAt: Date;

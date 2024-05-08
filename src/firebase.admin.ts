@@ -1,11 +1,14 @@
 import { initializeApp } from 'firebase-admin/app';
+import { getStorage } from 'firebase-admin/storage';
 
 const admin = require('firebase-admin');
 const serviceAccount = require('../firebase-adminsdk.json');
 
-const app = initializeApp({
+export const app = initializeApp({
 	credential: admin.credential.cert(serviceAccount)
 });
+
+const storage = getStorage(app);
 
 export const deleteAllUsers = (nextPageToken?) => {
   let uids = []
