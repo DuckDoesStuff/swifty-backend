@@ -23,6 +23,9 @@ export class Shop {
 	@Column({nullable: true})
 	logo: string;
 
+	@Column({nullable: true, default: 0})
+	sold: number;
+
 	@CreateDateColumn()
 	createdAt: Date;
 

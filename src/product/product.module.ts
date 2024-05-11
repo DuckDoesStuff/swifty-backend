@@ -43,12 +43,5 @@ export class ProductModule implements NestModule {
       {path: 'product', method: RequestMethod.PATCH},
       {path: 'product', method: RequestMethod.DELETE},
     );
-
-    consumer
-    .apply((req, res, next) => {
-      console.log(req.body);
-      next();
-    })
-    .forRoutes(ProductController);
   }
 }

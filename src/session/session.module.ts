@@ -8,6 +8,7 @@ import { MerchantService } from 'src/merchant/merchant.service';
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Merchant } from 'src/merchant/entities/merchant.entity';
 import { AuthMiddleware } from 'src/middleware/auth.middleware';
+import { CustomerAuthMiddleware } from 'src/middleware/customerAuth.middleware';
 
 @Module({
   imports: [
@@ -23,8 +24,15 @@ export class SessionModule {
     consumer
     .apply(AuthMiddleware)
     .forRoutes(
-      { path: 'session/customer', method: RequestMethod.DELETE },
+      { path: 'session/merchant', method: RequestMethod.GET },
       { path: 'session/merchant', method: RequestMethod.DELETE },
+    );
+
+    consumer
+    .apply(CustomerAuthMiddleware)
+    .forRoutes(
+      { path: 'session/customer', method: RequestMethod.GET },
+      { path: 'session/customer', method: RequestMethod.DELETE },
     );
   }
 }

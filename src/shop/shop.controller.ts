@@ -35,7 +35,12 @@ export class ShopController {
 
   @Get(':nameId')
   findOne(@Param('nameId') nameId: string) {
-    return this.shopService.findOne(nameId);
+    try {
+      return this.shopService.findOne(nameId);
+    } catch(error) {
+      console.error(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Patch(':nameId')

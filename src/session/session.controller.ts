@@ -42,22 +42,14 @@ export class SessionController {
   // Get customer data
   @Get("customer")
   async getCustomerData(@Req() req: Request, @Res() res: Response) {
-    const sessionCookie = req.cookies["swifty_customer_session"];
-    if(!sessionCookie) {
-      return res.send({ statusCode: HttpStatus.UNAUTHORIZED, message: "Unauthorized" });
-    }
-    const customer = await this.sessionService.getCustomerData(sessionCookie);
+    const customer = req.customer;
     res.send({ statusCode: HttpStatus.OK, data: customer });
   }
 
   // Get merchant data
   @Get("merchant")
   async getMerchantData(@Req() req: Request, @Res() res: Response) {
-    const sessionCookie = req.cookies["swifty_merchant_session"];
-    if(!sessionCookie) {
-      return res.send({ statusCode: HttpStatus.UNAUTHORIZED, message: "Unauthorized" });
-    }
-    const merchant = await this.sessionService.getMerchantData(sessionCookie);
+    const merchant = req.merchant;
     res.send({ statusCode: HttpStatus.OK, data: merchant });
   }
 

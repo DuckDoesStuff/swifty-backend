@@ -84,7 +84,7 @@ export class ProductService {
 
 
   findOneWithId(id: string) {
-    return this.productRepository.findOne({where: {id}, relations: ['productImages']});
+    return this.productRepository.findOne({where: {id}, relations: ['productImages', 'shop']});
   }
 
   async removeProduct(id: string) {

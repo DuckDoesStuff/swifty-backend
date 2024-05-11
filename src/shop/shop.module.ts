@@ -10,16 +10,21 @@ import { MerchantService } from 'src/merchant/merchant.service';
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Merchant } from 'src/merchant/entities/merchant.entity';
 import { AuthMiddleware } from 'src/middleware/auth.middleware';
+import { Product } from 'src/product/entities/product.entity';
+import { ProductService } from 'src/product/product.service';
+import { ProductImage } from 'src/productimage/entities/productimage.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Shop]),
     TypeOrmModule.forFeature([Session]),
+    TypeOrmModule.forFeature([Product]),
     TypeOrmModule.forFeature([Customer]),
     TypeOrmModule.forFeature([Merchant]),
+    TypeOrmModule.forFeature([ProductImage]),
   ],
   controllers: [ShopController],
-  providers: [ShopService, SessionService, CustomerService, MerchantService],
+  providers: [ShopService, SessionService, CustomerService, MerchantService, ProductService],
 })
 export class ShopModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
