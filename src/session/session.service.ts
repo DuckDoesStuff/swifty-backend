@@ -37,6 +37,7 @@ export class SessionService {
       await this.sessionRepository.save(session);
       return sessionCookie;
     } catch (error) {
+      console.log(error);
       throw new HttpException('Failed to create session cookie', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

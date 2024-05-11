@@ -14,8 +14,6 @@ export class CustomerService {
 
   async createCustomer(createCustomerDto: CreateCustomerDto) {
     try {
-      console.log("Creating new customer");
-      console.log(createCustomerDto);
       const customer = this.customerRepository.create(createCustomerDto);
       return await this.customerRepository.save(customer);
     } catch (error) {
@@ -42,13 +40,13 @@ export class CustomerService {
     return this.customerRepository.findOne({where: {email}});
   };
 
-  async updateCustomer(id: number, updateCustomerDto: UpdateCustomerDto) {
-    const customer = await this.customerRepository.findOne({where: {id}});
-    if (!customer) {
-      throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
+  updateCustomer(updateCustomerDto: UpdateCustomerDto, id: number) {
+    try {
+      return this.customerRepository.update(id, updateCustomerDto);
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
-    const updatedCustomer = Object.assign(customer, updateCustomerDto);
-    return await this.customerRepository.save(updatedCustomer);
   }
 
   remove(id: number) {

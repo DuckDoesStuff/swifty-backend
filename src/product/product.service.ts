@@ -64,10 +64,6 @@ export class ProductService {
     return { products, totalPages, total };
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} product`;
-  // }
-
   async createProductThumbnail(id: string, thumbnailUrl: string[]) {
     const product = await this.productRepository.findOne({where: {id}});
     if (!product) {
@@ -88,7 +84,7 @@ export class ProductService {
 
 
   findOneWithId(id: string) {
-    return this.productRepository.findOne({where: {id}});
+    return this.productRepository.findOne({where: {id}, relations: ['productImages']});
   }
 
   async removeProduct(id: string) {
@@ -97,5 +93,9 @@ export class ProductService {
       throw new HttpErrorByCode[HttpStatus.NOT_FOUND]('Product does not exist');
     }
     return this.productRepository.delete({id});
+  }
+
+  updateProduct(id: string, updateProductDto: UpdateProductDto) {
+    return this.productRepository.update({id}, updateProductDto);
   }
 }

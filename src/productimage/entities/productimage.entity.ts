@@ -5,7 +5,6 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, Pri
 
 @Entity()
 export class ProductImage {
-
 	@PrimaryGeneratedColumn()
 	id: number;
 

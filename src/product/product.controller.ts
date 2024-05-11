@@ -42,6 +42,28 @@ export class ProductController {
     return this.productService.findOneWithId(id);
   }
 
+  @Patch(':id')
+  updateProduct(@Body() body: UpdateProductDto, @Param('id') id: string) {
+    try {
+      return this.productService.updateProduct(id, body);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to update product');
+    }
+  }
+
+  @Patch("/thumbnail/:id")
+  updateThumbnail(@Param('id') id:string, @Body() thumbnailUrl: string[]) {
+    try {
+    console.log(thumbnailUrl);
+      return;
+      // return this.productService.updateProductThumbnail(id, thumbnailUrl);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to update thumbnail');
+    }
+  }
+
 
   // @Get()
   // findAll() {
@@ -58,8 +80,8 @@ export class ProductController {
   //   return this.productService.updateProduct(id, updateProductDto, req.merchant);
   // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.removeProduct(id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.productService.removeProduct(id);
+  // }
 }

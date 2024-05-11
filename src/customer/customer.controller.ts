@@ -3,6 +3,7 @@ import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { deleteAllUsers } from '../firebase.admin';
+import { Request } from 'express';
 
 @Controller('customer')
 export class CustomerController {
@@ -65,13 +66,19 @@ export class CustomerController {
     return 200;
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customerService.updateCustomer(+id, updateCustomerDto);
+  @Patch()
+  update(@Body() updateCustomerDto: UpdateCustomerDto, @Req() req: Request) {
+    try {
+      this.customerService.updateCustomer(updateCustomerDto, req.customerId);
+      return {statusCode: HttpStatus.OK};
+    }catch (error) {
+      console.error(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customerService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.customerService.remove(+id);
+  // }
 }
