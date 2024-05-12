@@ -13,6 +13,7 @@ import { AuthMiddleware } from 'src/middleware/auth.middleware';
 import { Product } from 'src/product/entities/product.entity';
 import { ProductService } from 'src/product/product.service';
 import { ProductImage } from 'src/productimage/entities/productimage.entity';
+import { Order } from 'src/order/entities/order.entity';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ProductImage } from 'src/productimage/entities/productimage.entity';
     TypeOrmModule.forFeature([Customer]),
     TypeOrmModule.forFeature([Merchant]),
     TypeOrmModule.forFeature([ProductImage]),
+    TypeOrmModule.forFeature([Order]),
   ],
   controllers: [ShopController],
   providers: [ShopService, SessionService, CustomerService, MerchantService, ProductService],

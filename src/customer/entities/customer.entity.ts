@@ -1,5 +1,7 @@
 import { Cart } from "src/cart/entities/cart.entity"
-import { Column, JoinColumn, OneToOne, Entity, PrimaryGeneratedColumn, Unique } from "typeorm"
+import { Invoice } from "src/invoice/entities/invoice.entity"
+import { Order } from "src/order/entities/order.entity"
+import { Column, JoinColumn, OneToOne, Entity, PrimaryGeneratedColumn, Unique, OneToMany } from "typeorm"
 
 
 
@@ -36,4 +38,10 @@ export class Customer {
 	@OneToOne(type => Cart, cart => cart.customer)
 	@JoinColumn()
 	cart: Cart
+
+	@OneToMany(type => Order, order => order.customer)
+	orders: Order[]
+
+	@OneToMany(type => Invoice, invoice => invoice.customer)
+	invoices: Invoice[]
 }

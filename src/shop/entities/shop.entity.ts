@@ -1,6 +1,8 @@
+import { Invoice } from "src/invoice/entities/invoice.entity";
 import { Merchant } from "src/merchant/entities/merchant.entity";
+import { Order } from "src/order/entities/order.entity";
 import { Product } from "src/product/entities/product.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 
 
 @Entity()
@@ -34,4 +36,10 @@ export class Shop {
 
 	@OneToMany(() => Product, product => product.shop)
 	products: Product[];
+
+	@OneToMany(() => Order, order => order.shop)
+	orders: Order[];
+
+	@OneToMany(() => Invoice, invoice => invoice.shop)
+	invoices: Invoice[];
 }

@@ -9,12 +9,14 @@ import { Session } from 'src/session/entities/session.entity';
 import { MerchantService } from 'src/merchant/merchant.service';
 import { Merchant } from 'src/merchant/entities/merchant.entity';
 import { CustomerAuthMiddleware } from 'src/middleware/customerAuth.middleware';
+import { Order } from 'src/order/entities/order.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Customer]),
     TypeOrmModule.forFeature([Session]),
     TypeOrmModule.forFeature([Merchant]),
+    TypeOrmModule.forFeature([Order]),
   ],
   controllers: [CustomerController],
   providers: [CustomerService, SessionService, MerchantService],

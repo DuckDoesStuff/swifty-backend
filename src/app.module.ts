@@ -9,6 +9,8 @@ import { ProductModule } from './product/product.module';
 import { ShopModule } from './shop/shop.module';
 import { SessionModule } from './session/session.module';
 import { ProductimageModule } from './productimage/productimage.module';
+import { OrderModule } from './order/order.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { ProductimageModule } from './productimage/productimage.module';
     ShopModule,
     SessionModule,
     ProductimageModule,
+    OrderModule,
+    InvoiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
