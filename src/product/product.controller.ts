@@ -28,6 +28,16 @@ export class ProductController {
     }
   }
 
+  @Delete("/thumbnail/:id")
+  deleteThumbnail(@Param('id') id: string) {
+    try {
+      return this.productService.deleteProductThumbnail(id);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to update thumbnail');
+    }
+  }
+
   @Get()
   getAll(@Query('shop') shopNameId: string, @Query('limit') limit: string, @Query('offset') offset: string, @Query('loadImg') loadImg: string) {
     const limitInt = limit ? parseInt(limit, 10) : 10;
