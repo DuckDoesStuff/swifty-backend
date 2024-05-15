@@ -43,7 +43,7 @@ export class ProductService {
   }
 
 
-  async findAll(limit: number, offset: number, loadImg: boolean, shopNameId: string) {
+  async findAll(orderby: string, limit: number, offset: number, loadImg: boolean, shopNameId: string) {
     const [products, total] = loadImg
       ? await this.productRepository.findAndCount({
           where: { shop: { nameId: shopNameId } },

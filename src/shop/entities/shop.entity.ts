@@ -21,6 +21,9 @@ export class Shop {
 	@Column()
 	phone: string;
 
+	@Column({default: 0})
+	revenue: number;
+
 	@Column({nullable: true})
 	logo: string;
 

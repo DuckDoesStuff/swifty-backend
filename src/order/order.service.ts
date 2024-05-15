@@ -87,10 +87,6 @@ export class OrderService {
       return {statusCode: HttpStatus.FORBIDDEN, message: 'Order not from this shop'};
     }
 
-    if(order.shop.merchant.id !== merchant.id || order.customer.id !== customer.id) {
-      return {statusCode: HttpStatus.FORBIDDEN, message: 'This order is not yours'};
-    }
-
     if (order.status === 'shipping' && updateOrderDto.status == 'canceled') {
       return {statusCode: HttpStatus.FORBIDDEN, message: 'Cannot cancel, order already shipping'};
     }
@@ -102,7 +98,7 @@ export class OrderService {
     if (updateOrderDto.status === 'completed') {
       await this.productRepository.update(order.product.id, 
         {sold: order.product.sold + order.quantity, stock: order.product.stock - order.quantity});
-      await this.shopRepository.update(order.shop.nameId, {sold: order.shop.sold + order.quantity});
+      await this.shopRepository.update(order.shop.nameId, {sold: order.shop.sold + order.quantity, revenue: order.shop.revenue + order.total});
     }
 
     return this.orderRepository.update(id, updateOrderDto);
